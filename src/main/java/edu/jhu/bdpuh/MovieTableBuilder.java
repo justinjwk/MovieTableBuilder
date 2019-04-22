@@ -36,34 +36,11 @@ public class MovieTableBuilder {
             System.exit(1);
         }
 
-
         String inputPath = args[0];
-
-//        Job movieTableBuilderJob = null;
-//
-//        // Specify the Input path
-//        try {
-//            FileInputFormat.addInputPath(movieTableBuilderJob, new Path(inputPath));
-//        } catch (IOException ex) {
-//            Logger.getLogger(MovieTableBuilder.class.getName()).log(Level.SEVERE, null, ex);
-//            return;
-//        }
-//
-//        // Set the Input Data Format
-//        movieTableBuilderJob.setInputFormatClass(TextInputFormat.class);
-
+        TableName tableName = TableName.valueOf(args[1]);
 
         File folder = new File(inputPath);
         File[] listOfFiles = folder.listFiles();
-
-
-//        File inputFile = new File(args[0]);
-//        if(!inputFile.exists() || !inputFile.isFile()) {
-//            System.out.printf("Unable to find input file: %s\n", inputFile.getAbsoluteFile());
-//        }
-
-
-        TableName tableName = TableName.valueOf(args[1]);
 
         // create table if it doesn't exist already
         try (Connection connection = ConnectionFactory.createConnection(config);
@@ -100,7 +77,6 @@ public class MovieTableBuilder {
                     writeData(inputFile, mutator);
                 }
             }
-
             mutator.close();
         }
 
