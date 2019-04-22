@@ -1,6 +1,9 @@
+/home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieEnrichmentReducer.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieSummaryReducer.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieSummaryMapper.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieTableBuilder.java
+/home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieEnrichmentMapper.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieSummaryJob.java
+/home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieEnrichmentJob.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieRating.java
 /home/hdadmin/programming/hw/mapred-hbase/src/main/java/edu/jhu/bdpuh/MovieItem.java

@@ -1,6 +1,9 @@
-edu/jhu/bdpuh/MovieSummaryReducer.class
-edu/jhu/bdpuh/MovieRating.class
 edu/jhu/bdpuh/MovieSummaryJob.class
-edu/jhu/bdpuh/MovieTableBuilder.class
 edu/jhu/bdpuh/MovieItem.class
+edu/jhu/bdpuh/MovieSummaryReducer.class
+edu/jhu/bdpuh/MovieEnrichmentReducer.class
+edu/jhu/bdpuh/MovieRating.class
+edu/jhu/bdpuh/MovieTableBuilder.class
+edu/jhu/bdpuh/MovieEnrichmentMapper.class
 edu/jhu/bdpuh/MovieSummaryMapper.class
+edu/jhu/bdpuh/MovieEnrichmentJob.class
