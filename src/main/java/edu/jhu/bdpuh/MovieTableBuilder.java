@@ -1,16 +1,22 @@
 package edu.jhu.bdpuh;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MovieTableBuilder {
     public static final String ITEM_CF = "item";
@@ -26,13 +32,37 @@ public class MovieTableBuilder {
         this.config = HBaseConfiguration.create();
 
         if(args.length < 2) {
-            System.out.printf("%s <input-file> <table-name>\n", this.getClass().getSimpleName());
+            System.out.printf("%s <input-folder> <table-name>\n", this.getClass().getSimpleName());
             System.exit(1);
         }
-        File inputFile = new File(args[0]);
-        if(!inputFile.exists() || !inputFile.isFile()) {
-            System.out.printf("Unable to find input file: %s\n", inputFile.getAbsoluteFile());
-        }
+
+
+        String inputPath = args[0];
+
+//        Job movieTableBuilderJob = null;
+//
+//        // Specify the Input path
+//        try {
+//            FileInputFormat.addInputPath(movieTableBuilderJob, new Path(inputPath));
+//        } catch (IOException ex) {
+//            Logger.getLogger(MovieTableBuilder.class.getName()).log(Level.SEVERE, null, ex);
+//            return;
+//        }
+//
+//        // Set the Input Data Format
+//        movieTableBuilderJob.setInputFormatClass(TextInputFormat.class);
+
+
+        File folder = new File(inputPath);
+        File[] listOfFiles = folder.listFiles();
+
+
+//        File inputFile = new File(args[0]);
+//        if(!inputFile.exists() || !inputFile.isFile()) {
+//            System.out.printf("Unable to find input file: %s\n", inputFile.getAbsoluteFile());
+//        }
+
+
         TableName tableName = TableName.valueOf(args[1]);
 
         // create table if it doesn't exist already
@@ -64,7 +94,13 @@ public class MovieTableBuilder {
                 }
             }
             BufferedMutator mutator = connection.getBufferedMutator(tableName);
-            writeData(inputFile, mutator);
+
+            for (File inputFile : listOfFiles) {
+                if (inputFile.isFile()) {
+                    writeData(inputFile, mutator);
+                }
+            }
+
             mutator.close();
         }
 
@@ -85,6 +121,9 @@ public class MovieTableBuilder {
         Put put = new Put(movieItem.movieId.getBytes());
         put.addColumn(ITEM_CF.getBytes(), "Title".getBytes(), movieItem.title.getBytes());
         put.addColumn(ITEM_CF.getBytes(), "Released".getBytes(), movieItem.released.getBytes());
+        // Req#2.a missing data(Video_Released and IMDb URL) is added
+        put.addColumn(ITEM_CF.getBytes(), "Video_Released".getBytes(), movieItem.video_released.getBytes());
+        put.addColumn(ITEM_CF.getBytes(), "IMDb URL".getBytes(), movieItem.url.getBytes());
 
         for(String genre : movieItem.genres)
             put.addColumn(ITEM_CF.getBytes(), genre.getBytes(), "".getBytes());

@@ -17,6 +17,7 @@ public class MovieItemTest {
         assertEquals("Toy Story (1995)", movieItem.title);
         assertFalse(movieItem.genres.contains("SciFi"));
         assertTrue(movieItem.genres.contains("Animation"));
+
     }
 
 }
